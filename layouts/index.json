@@ -1,0 +1,23 @@
+[
+  {
+    "id": "landing",
+    "name": "Landing Page",
+    "description": "A full marketing page with hero, features section, and about section. Good for products, services, or personal brands.",
+    "file": "landing.html",
+    "sections": ["header", "hero", "features", "about", "footer"]
+  },
+  {
+    "id": "portfolio",
+    "name": "Portfolio",
+    "description": "A sidebar identity panel with a main image grid. Good for artists, photographers, and designers.",
+    "file": "portfolio.html",
+    "sections": ["sidebar", "work-grid"]
+  },
+  {
+    "id": "article",
+    "name": "Article",
+    "description": "An editorial layout with a wide article column and sidebar. Good for essays, journalism, and long-form writing.",
+    "file": "article.html",
+    "sections": ["header", "article-header", "article-body", "sidebar", "footer"]
+  }
+]

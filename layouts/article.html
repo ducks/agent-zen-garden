@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-slot="site-title">Article</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/" class="publication-name" data-slot="publication-name">Publication</a>
+    <nav class="site-nav">
+      <a href="#" class="nav-link">Latest</a>
+      <a href="#" class="nav-link">Topics</a>
+      <a href="#" class="nav-link">About</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <article class="article">
+
+      <header class="article-header">
+        <div class="article-meta">
+          <span class="article-category" data-slot="article-category">Category</span>
+          <span class="article-date" data-slot="article-date">August 30, 2026</span>
+        </div>
+        <h1 class="article-title" data-slot="article-title">The title of this piece</h1>
+        <p class="article-deck" data-slot="article-deck">A compelling subtitle or deck that expands on the headline and draws the reader in.</p>
+        <div class="article-byline">
+          <img class="byline-avatar" src="" alt="" data-slot="byline-avatar">
+          <span class="byline-name" data-slot="byline-name">Author Name</span>
+        </div>
+      </header>
+
+      <div class="article-hero">
+        <img class="article-hero-image" src="" alt="" data-slot="article-hero-image">
+        <p class="article-hero-caption" data-slot="article-hero-caption">Image caption or credit</p>
+      </div>
+
+      <div class="article-body">
+        <p class="drop-cap" data-slot="article-p1">The first paragraph of the article begins here. This is where the reader is drawn into the story, the argument, or the idea being explored.</p>
+        <p data-slot="article-p2">The second paragraph continues the thought, adding context, evidence, or narrative momentum to keep the reader engaged.</p>
+        <h2 class="article-subhead" data-slot="article-subhead">A section heading</h2>
+        <p data-slot="article-p3">A third paragraph under the subheading, where the article goes deeper into a specific aspect of the topic.</p>
+        <blockquote class="article-quote">
+          <p data-slot="article-quote">"A pull quote that stands out from the body text and reinforces a key idea."</p>
+        </blockquote>
+        <p data-slot="article-p4">A final paragraph that brings the piece to a close, leaving the reader with something to think about.</p>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading" data-slot="sidebar-heading">Related</h3>
+        <ul class="sidebar-links">
+          <li><a href="#" class="sidebar-link" data-slot="related-1">Related piece one</a></li>
+          <li><a href="#" class="sidebar-link" data-slot="related-2">Related piece two</a></li>
+          <li><a href="#" class="sidebar-link" data-slot="related-3">Related piece three</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer class="site-footer">
+    <p class="footer-copy" data-slot="footer-copy">&copy; 2026</p>
+  </footer>
+
+</body>
+</html>

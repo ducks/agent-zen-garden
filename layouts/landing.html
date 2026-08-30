@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-slot="site-title">Site Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo" data-slot="logo">Brand</div>
+    <nav class="site-nav">
+      <a href="#" class="nav-link">Work</a>
+      <a href="#" class="nav-link">About</a>
+      <a href="#" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-headline" data-slot="hero-headline">Your headline here</h1>
+      <p class="hero-sub" data-slot="hero-sub">A short, punchy description of what you do or make.</p>
+      <a href="#" class="cta-button" data-slot="cta-label">Get started</a>
+    </div>
+    <div class="hero-image-wrap">
+      <img class="hero-image" src="" alt="" data-slot="hero-image">
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature" data-slot="feature-1">
+      <div class="feature-icon">◆</div>
+      <h3 class="feature-title" data-slot="feature-1-title">Feature one</h3>
+      <p class="feature-body" data-slot="feature-1-body">Short description of this feature or value.</p>
+    </div>
+    <div class="feature" data-slot="feature-2">
+      <div class="feature-icon">◆</div>
+      <h3 class="feature-title" data-slot="feature-2-title">Feature two</h3>
+      <p class="feature-body" data-slot="feature-2-body">Short description of this feature or value.</p>
+    </div>
+    <div class="feature" data-slot="feature-3">
+      <div class="feature-icon">◆</div>
+      <h3 class="feature-title" data-slot="feature-3-title">Feature three</h3>
+      <p class="feature-body" data-slot="feature-3-body">Short description of this feature or value.</p>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-text">
+      <h2 class="about-heading" data-slot="about-heading">About us</h2>
+      <p class="about-body" data-slot="about-body">A longer paragraph about who you are, what you stand for, and why it matters.</p>
+    </div>
+    <div class="about-image-wrap">
+      <img class="about-image" src="" alt="" data-slot="about-image">
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p class="footer-copy" data-slot="footer-copy">&copy; 2026</p>
+  </footer>
+
+</body>
+</html>

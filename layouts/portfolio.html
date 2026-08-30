@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-slot="site-title">Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-identity">
+      <div class="avatar-wrap">
+        <img class="avatar" src="" alt="" data-slot="avatar">
+      </div>
+      <h1 class="artist-name" data-slot="artist-name">Your Name</h1>
+      <p class="artist-bio" data-slot="artist-bio">A short bio — who you are and what you make.</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div class="sidebar-contact">
+      <a href="#" class="contact-link" data-slot="contact-link">Get in touch</a>
+    </div>
+  </aside>
+
+  <main class="portfolio-main">
+
+    <section class="work-grid" id="work">
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-1-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-1-title">Project one</h2>
+            <p class="work-tags" data-slot="work-1-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-2-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-2-title">Project two</h2>
+            <p class="work-tags" data-slot="work-2-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-3-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-3-title">Project three</h2>
+            <p class="work-tags" data-slot="work-3-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-4-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-4-title">Project four</h2>
+            <p class="work-tags" data-slot="work-4-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-5-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-5-title">Project five</h2>
+            <p class="work-tags" data-slot="work-5-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+      <article class="work-item">
+        <a href="#" class="work-item-link">
+          <img class="work-image" src="" alt="" data-slot="work-6-image">
+          <div class="work-overlay">
+            <h2 class="work-title" data-slot="work-6-title">Project six</h2>
+            <p class="work-tags" data-slot="work-6-tags">Tag · Tag</p>
+          </div>
+        </a>
+      </article>
+    </section>
+
+  </main>
+
+</body>
+</html>
