@@ -1,0 +1,19 @@
+[Unit]
+Description=Agent Zen Garden — WebMCP web design server
+After=network.target
+
+[Service]
+Type=simple
+# Adjust User and WorkingDirectory to match your VPS
+User=deploy
+WorkingDirectory=/srv/agent-zen-garden
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=3
+Environment=NODE_ENV=production
+Environment=PORT=3456
+# Puppeteer downloads Chromium into this cache dir on first run
+Environment=PUPPETEER_CACHE_DIR=/srv/agent-zen-garden/.cache/puppeteer
+
+[Install]
+WantedBy=multi-user.target

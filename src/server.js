@@ -13,6 +13,9 @@ const tools = require("./tools");
 const LANDING_PAGE = path.join(__dirname, "landing.html");
 
 const app = express();
+// Behind Caddy: trust X-Forwarded-Proto so req.protocol reports https,
+// making manifest tool URLs correct on the deployed domain.
+app.set("trust proxy", true);
 app.use(express.json());
 
 const httpServer = createServer(app);
@@ -82,7 +85,8 @@ app.get("/preview/:sessionId", (req, res) => {
     .replace(
       "</body>",
       `<script>
-        const ws = new WebSocket("ws://" + location.host + "?session=${req.params.sessionId}");
+        const proto = location.protocol === "https:" ? "wss:" : "ws:";
+        const ws = new WebSocket(proto + "//" + location.host + "?session=${req.params.sessionId}");
         ws.onmessage = () => location.reload();
       </script></body>`
     );

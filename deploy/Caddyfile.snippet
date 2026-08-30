@@ -1,0 +1,11 @@
+# Add this block to your VPS /etc/caddy/Caddyfile.
+# Caddy will provision and renew the TLS cert automatically.
+
+agentzen.garden {
+	reverse_proxy localhost:3456
+}
+
+# If you also want the www subdomain to redirect:
+# www.agentzen.garden {
+# 	redir https://agentzen.garden{uri}
+# }
