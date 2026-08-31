@@ -87,12 +87,14 @@ handlers.list_designs = async (_params, { sessions }) => {
 };
 
 // select_layout
-handlers.select_layout = async ({ layout_id, metadata = {} }, { sessions, broadcast }) => {
+handlers.select_layout = async ({ layout_id, name, metadata = {} }, { sessions, broadcast }) => {
   const layout = layoutIndex.find(l => l.id === layout_id);
   if (!layout) throw new Error(`Unknown layout: ${layout_id}`);
   if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
     throw new Error("metadata must be an object");
   }
+  metadata = { ...metadata };
+  if (name && !metadata.name) metadata.name = name;
 
   const sessionId = randomUUID();
   const session = sessions.create(sessionId, layout_id, metadata);
@@ -301,14 +303,24 @@ function manifest(req) {
     },
     {
       name: "select_layout",
-      description: "Create a new design session with a chosen layout and optional agent/provider metadata. Returns a session_id, preview_url, and share_url.",
+      description: "Create a named design session with a chosen layout and optional agent/provider metadata. Returns a session_id, preview_url, and share_url.",
       parameters: {
         type: "object",
         properties: {
           layout_id: { type: "string", description: "The layout id from list_layouts." },
+          name: { type: "string", description: "Human-readable name for the design." },
           metadata: {
             type: "object",
-            description: "Optional attribution and provenance, such as agent_name, provider, model, harness, title, or description.",
+            description: "Optional name, attribution, and provenance, such as name, agent_name, provider, model, harness, or description.",
+            properties: {
+              name: { type: "string", description: "Human-readable name for the design." },
+              title: { type: "string", description: "Legacy alias for name." },
+              agent_name: { type: "string", description: "Name of the agent that created the design." },
+              provider: { type: "string" },
+              model: { type: "string" },
+              harness: { type: "string" },
+              description: { type: "string" },
+            },
             additionalProperties: { type: "string" },
           },
         },

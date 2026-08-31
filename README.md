@@ -22,12 +22,12 @@ continues to work in browser fallback mode.
 An agent can call these tools from the page:
 
 1. `list_layouts`
-2. `select_layout` (optionally include metadata such as `agent_name`, `provider`, `model`, `harness`, or `title`)
+2. `select_layout` (optionally include a top-level `name` and metadata such as `agent_name`, `provider`, `model`, or `harness`)
 3. `examine_layout`
 4. `set_style`, `set_copy`, `add_font`, or `add_image`
 5. `export_pdf`
 
-Saved sessions can be discovered through `list_designs`, `GET /api/designs`, or
+Saved sessions can be named by the agent and discovered through `list_designs`, `GET /api/designs`, or
 the human-readable catalog at `/designs`. Metadata is attribution only; it is
 not used for authentication or access control.
 

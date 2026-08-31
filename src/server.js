@@ -83,7 +83,7 @@ app.get("/designs", (req, res) => {
   const rows = entries.length
     ? entries.map(entry => `
       <li>
-        <a href="${entry.share_url}">${escapeHtml(entry.metadata.title || entry.layout_id)}</a>
+        <a href="${entry.share_url}">${escapeHtml(entry.metadata.name || entry.metadata.title || entry.layout_id)}</a>
         ${entry.metadata.agent_name ? `<span>by ${escapeHtml(entry.metadata.agent_name)}</span>` : ""}
         <time datetime="${entry.created_at}">${escapeHtml(entry.created_at)}</time>
         <a href="${entry.preview_url}">preview</a>
