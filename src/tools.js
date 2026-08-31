@@ -70,13 +70,34 @@ handlers.list_layouts = async (_params, _ctx) => {
   };
 };
 
+// list_designs
+handlers.list_designs = async (_params, { sessions }) => {
+  return {
+    designs: sessions.list()
+      .filter(session => fs.existsSync(session.htmlPath))
+      .map(session => ({
+        session_id: session.id,
+        layout_id: session.layoutId,
+        created_at: new Date(session.createdAt).toISOString(),
+        metadata: session.metadata,
+        preview_url: `/preview/${session.id}`,
+        share_url: `/share/${session.id}`,
+      })),
+  };
+};
+
 // select_layout
-handlers.select_layout = async ({ layout_id }, { sessions, broadcast }) => {
+handlers.select_layout = async ({ layout_id, name, metadata = {} }, { sessions, broadcast }) => {
   const layout = layoutIndex.find(l => l.id === layout_id);
   if (!layout) throw new Error(`Unknown layout: ${layout_id}`);
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+    throw new Error("metadata must be an object");
+  }
+  metadata = { ...metadata };
+  if (name && !metadata.name) metadata.name = name;
 
   const sessionId = randomUUID();
-  const session = sessions.create(sessionId, layout_id);
+  const session = sessions.create(sessionId, layout_id, metadata);
 
   // Copy layout HTML into workspace
   const html = fs.readFileSync(path.join(LAYOUTS_DIR, layout.file), "utf8");
@@ -88,8 +109,10 @@ handlers.select_layout = async ({ layout_id }, { sessions, broadcast }) => {
   return {
     session_id: sessionId,
     layout: layout.name,
+    metadata: session.metadata,
     preview_url: `/preview/${sessionId}`,
-    message: `Session created. Visit /preview/${sessionId} to see the live canvas. Use examine_layout to see available slots and selectors.`,
+    share_url: `/share/${sessionId}`,
+    message: `Session created. Visit /preview/${sessionId} to see the live canvas, or share /share/${sessionId}. Use examine_layout to see available slots and selectors.`,
   };
 };
 
@@ -273,12 +296,33 @@ function manifest(req) {
       endpoint: `${base}/mcp/tool/list_layouts`,
     },
     {
+      name: "list_designs",
+      description: "List saved design sessions with public preview and share URLs.",
+      parameters: { type: "object", properties: {}, required: [] },
+      endpoint: `${base}/mcp/tool/list_designs`,
+    },
+    {
       name: "select_layout",
-      description: "Create a new design session with a chosen layout. Returns a session_id and preview_url.",
+      description: "Create a named design session with a chosen layout and optional agent/provider metadata. Returns a session_id, preview_url, and share_url.",
       parameters: {
         type: "object",
         properties: {
           layout_id: { type: "string", description: "The layout id from list_layouts." },
+          name: { type: "string", description: "Human-readable name for the design." },
+          metadata: {
+            type: "object",
+            description: "Optional name, attribution, and provenance, such as name, agent_name, provider, model, harness, or description.",
+            properties: {
+              name: { type: "string", description: "Human-readable name for the design." },
+              title: { type: "string", description: "Legacy alias for name." },
+              agent_name: { type: "string", description: "Name of the agent that created the design." },
+              provider: { type: "string" },
+              model: { type: "string" },
+              harness: { type: "string" },
+              description: { type: "string" },
+            },
+            additionalProperties: { type: "string" },
+          },
         },
         required: ["layout_id"],
       },

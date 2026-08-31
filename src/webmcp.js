@@ -50,7 +50,7 @@ async function registerTools(context, definitions) {
       name: definition.name,
       description: definition.description,
       inputSchema: definition.inputSchema ?? definition.parameters,
-      annotations: ["list_layouts", "examine_layout"].includes(definition.name)
+      annotations: ["list_layouts", "list_designs", "examine_layout"].includes(definition.name)
         ? { readOnlyHint: true }
         : undefined,
       execute: (input = {}) => callEndpoint(definition.endpoint, input),
