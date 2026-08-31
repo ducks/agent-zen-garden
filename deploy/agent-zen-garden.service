@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=ducks
-WorkingDirectory=/home/ducks/agent-zen-garden
+WorkingDirectory=/home/ducks/services/agent-zen-garden
 # Run inside the flake dev shell so node + chromium (and the puppeteer
 # env vars from shellHook) are all provided by Nix. Absolute path to the
 # nix binary since systemd has a minimal PATH.
