@@ -265,7 +265,7 @@ handlers.export_pdf = async ({ session_id }, { sessions }) => {
 function manifest(req) {
   const base = `${req.protocol}://${req.get("host")}`;
 
-  return [
+  const definitions = [
     {
       name: "list_layouts",
       description: "List available layout templates. Always call this first to see what layouts are available.",
@@ -370,6 +370,10 @@ function manifest(req) {
       endpoint: `${base}/mcp/tool/export_pdf`,
     },
   ];
+
+  // Keep the original `parameters` field for the HTTP manifest consumers while
+  // also exposing the standard WebMCP name used by document.modelContext.
+  return definitions.map(tool => ({ ...tool, inputSchema: tool.parameters }));
 }
 
 module.exports = { handlers, manifest };

@@ -11,6 +11,7 @@ const sessions = require("./sessions");
 const tools = require("./tools");
 
 const LANDING_PAGE = path.join(__dirname, "landing.html");
+const WEBMCP_SCRIPT = path.join(__dirname, "webmcp.js");
 
 const app = express();
 // Behind Caddy: trust X-Forwarded-Proto so req.protocol reports https,
@@ -40,6 +41,7 @@ function broadcast(sessionId, event) {
 
 // ── Landing page ─────────────────────────────────────────────────────────────
 app.get("/", (req, res) => res.sendFile(LANDING_PAGE));
+app.get("/webmcp.js", (req, res) => res.type("application/javascript").sendFile(WEBMCP_SCRIPT));
 
 // ── WebMCP manifest ──────────────────────────────────────────────────────────
 app.get("/.well-known/mcp.json", (req, res) => {
@@ -84,7 +86,8 @@ app.get("/preview/:sessionId", (req, res) => {
     )
     .replace(
       "</body>",
-      `<script>
+      `<script src="/webmcp.js" defer></script>
+      <script>
         const proto = location.protocol === "https:" ? "wss:" : "ws:";
         const ws = new WebSocket(proto + "//" + location.host + "?session=${req.params.sessionId}");
         ws.onmessage = () => location.reload();
