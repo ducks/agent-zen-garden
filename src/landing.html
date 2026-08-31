@@ -487,11 +487,15 @@
 
   <section class="tools-section" id="tools">
     <div class="section-label">Tools</div>
-    <h2 style="font-size:1.8rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:1.5rem;">Eight tools. Complete design control.</h2>
+    <h2 style="font-size:1.8rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:1.5rem;">Nine tools. Complete design control.</h2>
     <div class="tools-grid">
       <div class="tool-card">
         <div class="tool-name">list_layouts</div>
         <div class="tool-desc">Returns all available layout templates with descriptions and section info.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">list_designs</div>
+        <div class="tool-desc">Lists saved design sessions with attribution metadata and share URLs.</div>
       </div>
       <div class="tool-card">
         <div class="tool-name">select_layout</div>
@@ -591,6 +595,7 @@
       <span class="url">GET /.well-known/mcp.json</span><br><br>
       <span class="comment"># Tool endpoints</span><br>
       <span class="url">POST /mcp/tool/list_layouts</span><br>
+      <span class="url">POST /mcp/tool/list_designs</span><br>
       <span class="url">POST /mcp/tool/select_layout</span><br>
       <span class="url">POST /mcp/tool/examine_layout</span><br>
       <span class="url">POST /mcp/tool/set_style</span><br>

@@ -61,6 +61,11 @@ nix develop --command npm ci   # only if package-lock changed
 sudo systemctl restart agent-zen-garden
 ```
 
+Session data is stored on the host, outside Git. Back up both
+`~/services/agent-zen-garden/data/sessions.sqlite` and
+`~/services/agent-zen-garden/workspaces/` if designs need to survive host
+replacement.
+
 ## Verifying
 
 ```bash
