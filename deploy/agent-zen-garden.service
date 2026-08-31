@@ -4,16 +4,16 @@ After=network.target
 
 [Service]
 Type=simple
-# Adjust User and WorkingDirectory to match your VPS
-User=deploy
-WorkingDirectory=/srv/agent-zen-garden
-ExecStart=/usr/bin/node src/server.js
+User=ducks
+WorkingDirectory=/home/ducks/agent-zen-garden
+# Run inside the flake dev shell so node + chromium (and the puppeteer
+# env vars from shellHook) are all provided by Nix. Absolute path to the
+# nix binary since systemd has a minimal PATH.
+ExecStart=/nix/var/nix/profiles/default/bin/nix develop --command node src/server.js
 Restart=on-failure
 RestartSec=3
 Environment=NODE_ENV=production
 Environment=PORT=3456
-# Puppeteer downloads Chromium into this cache dir on first run
-Environment=PUPPETEER_CACHE_DIR=/srv/agent-zen-garden/.cache/puppeteer
 
 [Install]
 WantedBy=multi-user.target

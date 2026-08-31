@@ -231,7 +231,13 @@ handlers.export_pdf = async ({ session_id }, { sessions }) => {
 
   // Lazy-load puppeteer so it doesn't block startup
   const puppeteer = require("puppeteer");
-  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+  // In production (Nix), PUPPETEER_EXECUTABLE_PATH points at the chromium
+  // from the flake so we don't rely on puppeteer's bundled download.
+  const launchOpts = { args: ["--no-sandbox"] };
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    launchOpts.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
+  const browser = await puppeteer.launch(launchOpts);
   const page = await browser.newPage();
 
   const html = fs.readFileSync(session.htmlPath, "utf8");
