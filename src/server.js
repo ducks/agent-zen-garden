@@ -82,27 +82,90 @@ app.get("/designs", (req, res) => {
   const entries = designEntries();
   const rows = entries.length
     ? entries.map(entry => `
-      <li>
-        <a href="${entry.share_url}">${escapeHtml(entry.metadata.name || entry.metadata.title || entry.layout_id)}</a>
-        ${entry.metadata.agent_name ? `<span>by ${escapeHtml(entry.metadata.agent_name)}</span>` : ""}
-        <time datetime="${entry.created_at}">${escapeHtml(entry.created_at)}</time>
-        <a href="${entry.preview_url}">preview</a>
-      </li>`).join("")
-    : "<li>No designs yet.</li>";
+      <article class="design-card">
+        <div class="design-card-top">
+          <span class="design-layout">${escapeHtml(entry.layout_id)}</span>
+          <span class="design-status">saved</span>
+        </div>
+        <h2>${escapeHtml(entry.metadata.name || entry.metadata.title || entry.layout_id)}</h2>
+        ${entry.metadata.description ? `<p>${escapeHtml(entry.metadata.description)}</p>` : ""}
+        <div class="design-meta">
+          ${entry.metadata.agent_name ? `<span>by ${escapeHtml(entry.metadata.agent_name)}</span>` : ""}
+          ${entry.metadata.model ? `<span>${escapeHtml(entry.metadata.model)}</span>` : ""}
+          <time datetime="${entry.created_at}">${escapeHtml(entry.created_at)}</time>
+        </div>
+        <div class="design-actions">
+          <a class="button button-primary" href="${entry.share_url}">Open design</a>
+          <a class="button button-secondary" href="${entry.preview_url}">Live preview</a>
+        </div>
+      </article>`).join("")
+    : "<p class=\"empty-state\">No designs yet. Create one with an agent and it will appear here.</p>";
 
   res.type("html").send(`<!doctype html>
     <html lang="en"><head><meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Agent Zen Garden — Designs</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
       <style>
-        :root { color-scheme: dark; font-family: system-ui, sans-serif; }
-        body { max-width: 50rem; margin: 4rem auto; padding: 0 1.25rem; background: #171518; color: #f4eef4; }
-        a { color: #a7d9d5; }
-        li { display: flex; gap: 1rem; align-items: baseline; padding: .8rem 0; border-bottom: 1px solid #3c363e; }
-        time { color: #aaa1aa; font-size: .85rem; flex: 1; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { color-scheme: dark; --bg:#0e0e0e; --surface:#1a1a1a; --border:#2a2a2a; --text:#e8e8e8; --muted:#888; --green:#4ade80; --font:'DM Sans',system-ui,sans-serif; --mono:'DM Mono',monospace; }
+        html { background: var(--bg); color: var(--text); }
+        body { min-height: 100vh; font-family: var(--font); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
+        a { color: inherit; text-decoration: none; }
+        ::selection { background: var(--green); color: #000; }
+        nav { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 3rem; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+        .nav-logo { font-weight:700; font-size:1rem; letter-spacing:-.01em; display:flex; align-items:center; gap:.5rem; }
+        .nav-logo .dot { width:8px; height:8px; background:var(--green); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+        .nav-links { display:flex; gap:2rem; font-size:.875rem; color:var(--muted); }
+        .nav-links a:hover, .nav-links a.active { color:var(--text); }
+        .nav-cta, .button-primary { font-size:.875rem; font-weight:500; background:var(--green); color:#000; padding:.5rem 1.25rem; border-radius:6px; transition:opacity .15s; }
+        .nav-cta:hover, .button-primary:hover { opacity:.85; }
+        main { max-width:860px; margin:0 auto; padding:6rem 3rem 5rem; }
+        .section-label { font-family:var(--mono); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--green); margin-bottom:1rem; }
+        .catalog-heading { font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.08; letter-spacing:-.03em; margin-bottom:1.25rem; }
+        .catalog-intro { max-width:560px; color:var(--muted); font-size:1.05rem; line-height:1.7; margin-bottom:3rem; }
+        .design-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; }
+        .design-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.5rem; min-height:240px; display:flex; flex-direction:column; transition:border-color .15s, transform .15s; }
+        .design-card:hover { border-color:#555; transform:translateY(-2px); }
+        .design-card-top, .design-meta { display:flex; align-items:center; gap:.6rem; }
+        .design-card-top { justify-content:space-between; margin-bottom:1.4rem; }
+        .design-layout, .design-status { font-family:var(--mono); font-size:.7rem; }
+        .design-layout { color:var(--green); }
+        .design-status { color:var(--muted); border:1px solid var(--border); border-radius:100px; padding:.15rem .5rem; }
+        .design-card h2 { font-size:1.25rem; line-height:1.2; letter-spacing:-.02em; margin-bottom:.5rem; }
+        .design-card p { color:var(--muted); font-size:.875rem; line-height:1.5; margin-bottom:1rem; }
+        .design-meta { flex-wrap:wrap; color:var(--muted); font-size:.75rem; margin-top:auto; padding-top:1rem; }
+        .design-meta span + span::before, .design-meta time::before { content:'·'; margin-right:.6rem; color:#555; }
+        .design-actions { display:flex; gap:.6rem; margin-top:1.25rem; }
+        .button { display:inline-block; font-size:.8rem; padding:.5rem .8rem; border-radius:6px; }
+        .button-secondary { border:1px solid var(--border); color:var(--text); }
+        .button-secondary:hover { border-color:#555; }
+        .empty-state { color:var(--muted); border:1px dashed var(--border); border-radius:10px; padding:2rem; }
+        footer { border-top:1px solid var(--border); padding:2rem 3rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+        footer p { font-size:.8rem; color:var(--muted); }
+        @media (max-width:640px) { nav { padding:1rem 1.5rem; } .nav-links { display:none; } .nav-cta { padding:.5rem .8rem; } main { padding:4rem 1.5rem 3rem; } footer { padding:1.5rem; } }
       </style>
-    </head><body><p><a href="/">Agent Zen Garden</a></p>
-      <h1>Designs</h1><ul>${rows}</ul>
+    </head><body>
+      <nav>
+        <a class="nav-logo" href="/"><span class="dot"></span>Agent Zen Garden</a>
+        <div class="nav-links">
+          <a href="/#how-it-works">How it works</a>
+          <a href="/#tools">Tools</a>
+          <a href="/#layouts">Layouts</a>
+          <a href="/designs" class="active">Designs</a>
+          <a href="/#connect">Connect</a>
+        </div>
+        <a href="/#connect" class="nav-cta">Connect your agent</a>
+      </nav>
+      <main>
+        <div class="section-label">Saved work</div>
+        <h1 class="catalog-heading">Designs made in the garden.</h1>
+        <p class="catalog-intro">Browse the pages agents have shaped with the garden's layouts and tools. Open a share link to see the design, or jump into its live preview.</p>
+        <div class="design-grid">${rows}</div>
+      </main>
+      <footer><p>Agent Zen Garden — built for the OpenAI WebMCP Challenge</p><span class="design-status">${entries.length} design${entries.length === 1 ? "" : "s"}</span></footer>
     </body></html>`);
 });
 
