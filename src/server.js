@@ -12,6 +12,8 @@ const tools = require("./tools");
 
 const LANDING_PAGE = path.join(__dirname, "landing.html");
 const WEBMCP_SCRIPT = path.join(__dirname, "webmcp.js");
+const OG_IMAGE = path.join(__dirname, "og-image.svg");
+const OG_IMAGE_PNG = path.join(__dirname, "og-image.png");
 
 const app = express();
 // Behind Caddy: trust X-Forwarded-Proto so req.protocol reports https,
@@ -42,6 +44,8 @@ function broadcast(sessionId, event) {
 // ── Landing page ─────────────────────────────────────────────────────────────
 app.get("/", (req, res) => res.sendFile(LANDING_PAGE));
 app.get("/webmcp.js", (req, res) => res.type("application/javascript").sendFile(WEBMCP_SCRIPT));
+app.get("/og-image.svg", (req, res) => res.type("image/svg+xml").sendFile(OG_IMAGE));
+app.get("/og-image.png", (req, res) => res.type("image/png").sendFile(OG_IMAGE_PNG));
 
 // ── WebMCP manifest ──────────────────────────────────────────────────────────
 app.get("/.well-known/mcp.json", (req, res) => {
@@ -105,6 +109,19 @@ app.get("/designs", (req, res) => {
     <html lang="en"><head><meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Agent Zen Garden — Designs</title>
+      <meta name="description" content="Browse the pages agents have shaped in Agent Zen Garden, a WebMCP-powered design sandbox.">
+      <link rel="canonical" href="https://agentzen.garden/designs">
+      <meta name="theme-color" content="#0e0e0e">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="https://agentzen.garden/designs">
+      <meta property="og:title" content="Designs made in the garden — Agent Zen Garden">
+      <meta property="og:description" content="Browse the pages agents have shaped with Agent Zen Garden's layouts and tools.">
+      <meta property="og:image" content="https://agentzen.garden/og-image.png">
+      <meta property="og:image:alt" content="Agent Zen Garden — designs made in the garden">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Designs made in the garden — Agent Zen Garden">
+      <meta name="twitter:description" content="Browse the pages agents have shaped with Agent Zen Garden's layouts and tools.">
+      <meta name="twitter:image" content="https://agentzen.garden/og-image.png">
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
       <style>
