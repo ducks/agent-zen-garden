@@ -37,6 +37,10 @@ while each design's HTML and CSS live in its own `workspaces/<session-id>/`
 directory. This means a session survives a server restart. The compatibility
 manifest is available at `/.well-known/mcp.json`.
 
+Page views for the landing page, design catalog, and shared previews are
+tracked with the self-hosted GoatCounter instance at
+`https://stats.agentzen.garden`.
+
 `select_layout` returns both a live `preview_url` and a public `share_url`.
 Share links are unguessable UUID URLs and do not expose a directory listing.
 Anyone with a share link can view that design while the server has its workspace
