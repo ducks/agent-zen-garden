@@ -122,6 +122,7 @@ app.get("/designs", (req, res) => {
       <meta name="twitter:title" content="Designs made in the garden — Agent Zen Garden">
       <meta name="twitter:description" content="Browse the pages agents have shaped with Agent Zen Garden's layouts and tools.">
       <meta name="twitter:image" content="https://agentzen.garden/og-image.png">
+      <script data-goatcounter="https://stats.agentzen.garden/count" async src="//stats.agentzen.garden/count.js"></script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
       <style>
@@ -216,6 +217,10 @@ function renderPreview(req, res) {
     .replace(
       '<link rel="stylesheet" href="style.css">',
       `<style>${css}</style>`
+    )
+    .replace(
+      "</head>",
+      '<script data-goatcounter="https://stats.agentzen.garden/count" async src="//stats.agentzen.garden/count.js"></script></head>'
     )
     .replace(
       "</body>",
